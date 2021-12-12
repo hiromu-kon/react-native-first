@@ -1,12 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
+import Header from './components/Header';
 
 export default function App() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/users');
+      const users = await res.json();
+      setUsers(users);
+    };
+    getUser();
+  }, []);
+
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text>{item.name}</Text>
+    </View>
+  );
+  
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Header title="ユーザ一覧" />
+      <FlatList
+        data={users}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              backgroundColor: 'lightgray',
+              height: 1,
+            }}
+          ></View>
+        )}
+      />
     </View>
   );
 }
@@ -14,8 +43,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  item: {
+    padding: 40,
   },
 });
