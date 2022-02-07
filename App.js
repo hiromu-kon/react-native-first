@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { 
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  Alert,
+  Image
+} from 'react-native';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 export default function App() {
   const [users, setUsers] = useState([]);
@@ -15,9 +24,18 @@ export default function App() {
   }, []);
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>{item.name}</Text>
-    </View>
+
+    <Pressable onPress={() => {
+      Alert.alert(item.name);
+    }}>
+      <View style={styles.item}>
+        <Image
+          source={{ uri: 'https://i.pravatar.cc/150' }}
+          style={styles.avatar}
+        />
+        <Text>{item.name}</Text>
+      </View>
+    </Pressable>
   );
   
   return (
@@ -36,6 +54,7 @@ export default function App() {
           ></View>
         )}
       />
+      <Footer />
     </View>
   );
 }
@@ -45,6 +64,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 40,
+    backgroundColor: '#88cb7f',
+  },
+  avatar: {
+    height: 50,
+    width: 50,
+    borderRadius: 30,
+    marginRight: 8,
   },
 });

@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const Header = ({ title }) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.text}>{title}</Text>
+      <View style={styles.title}>
+        <Icon name="users" size={25} />
+        <Text style={styles.text}>{title}</Text>
+      </View>
     </View>
   );
 };
@@ -14,11 +18,15 @@ const styles = StyleSheet.create({
     height: 90,
     backgroundColor: 'lightblue',
   },
-  text: {
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 50,
-    color: 'white',
+  },
+  text: {
     fontSize: 20,
-    textAlign: 'center',
+    marginLeft: 8,
   },
 });
 
